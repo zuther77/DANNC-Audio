@@ -15,6 +15,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'dancc/output_style.css' %}" rel="stylesheet" />
+        
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -36,14 +37,41 @@
         <!-- Masthead-->
         <header class="masthead" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.7) 75%, #000000 100%), url('{%static 'dancc/img/bg-masthead.jpg' %}' )" >
             <div class="container d-flex h-100 align-items-center">
-                <div class="container h-75" style="background: none;background-color: white;border-radius: 1.5rem;" wfd-id="1">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" id="prog" style="min-width: 20px;"></div>
+                <div class="container h-50" style="background: none;background-color: white;border-radius: 1.5rem;" wfd-id="1">
+                    <div class="container">
+                        <label style="margin-top: 2rem;">File name: </label>
+                        {% block context%}
+                         <p id='file_label'>
+                            {{ file_name }}
+                        </p>
+                        {%endblock context%}
+                        <br>
+                        <label id="getting_ready" style="display: block;">File is getting ready for download</label>
+                        <label id="ready" style="display: none;">File is ready for download</label>
+                        <div class="progress">
+                            <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                              <span id="current-progress"></span>
+                            </div>
+                        </div>
+                        <br> 
+                        <a href="{{ download_path }}" download id="download" style="display: none;">Download</a>
                     </div>
                     
                     </div>
                 </div>
             </div>
         </header>
+
+
+        {% block jquery %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'dancc/js/scripts.js' %}"></script>
+        <!-- <script src="{% static 'dancc/scripts.js' %}"></script> -->
+        {% endblock %}
+
     </body>
 </html>
