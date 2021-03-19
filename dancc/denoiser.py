@@ -1,6 +1,6 @@
 from dancc.prediction_denoise import prediction
 
-def denoise(a):
+def denoise():
     #Example: python main.py --mode="prediction"
     #path to find pre-trained weights / save models
     weights_path = 'E:/DANCC audio/front end/v2/website/weights'
@@ -13,7 +13,7 @@ def denoise(a):
     #Name noisy sound file to denoise
     audio_input_prediction = ['test.wav']
     #Name of denoised sound file to save
-    audio_output_prediction = 'denoise_' + a
+    audio_output_prediction = 'denoise.wav'
     # Sample rate to read audio
     sample_rate = 8000
     # Minimum duration of audio files to consider

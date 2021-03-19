@@ -3,10 +3,13 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.http import HttpResponse, Http404
 from dancc.denoiser import denoise
+from pydub import AudioSegment
+from dancc.audio_extractor import extractor
 
 import os
 
 is_video = False
+
 
 # Create your views here.
 def home(request):
@@ -19,30 +22,56 @@ def clear_media_dir():
     print('Deleted' , current)
 
 
+def mp3_to_wav():
+    current = os.getcwd()
+    src = current + '\\media\\test.mp3'
+    dst =  current + "\\media\\test.wav"
+    sound = AudioSegment.from_mp3(src)
+    sound.export(dst, format="wav")
+
+def wav_to_mp3(a):
+    current = os.getcwd()
+    src = current + "\\media\\denoise.wav"
+    dst =  current + "\\media\\denoise_ " + a 
+    sound = AudioSegment.from_mp3(src)
+    sound.export(dst, format="mp3")
+    os.remove(src)
+    print('Deleted' , src)
+    down_path = '/media/denoise_' + a 
+    return down_path
+
 
 def output(request):
+    is_mp3 = False
     fileObj = request.FILES['file_name']
     fs = FileSystemStorage()
+    print(fs , type(fs))
     a = fileObj.name
     b = a.split('.')
     extension = b[1]
-   
+    print(extension)
     fileObj.name = 'test.' + extension
-
     #saving files of media folder 
     path_to_file = fs.save(fileObj.name , fileObj)
     path = fs.url(path_to_file)
 
-    
-   
-    
-    #remove files uploded after download is done 
-    
+    if extension == 'mp3':
+        is_mp3 = True
+        mp3_to_wav()
+    else:
+        is_mp3 = False
     
     
     #calling main.py of Unet model with media/test as input 
-    d_path = '/media/' + denoise(a)
+    d_path = '/media/' + denoise()
     clear_media_dir()
+
+    if is_mp3:
+        connverted_path = wav_to_mp3(a)
+        print("this is converted path : " , connverted_path)
+        d_path = connverted_path
+
+    print(d_path)
 
     context ={
         'file_name': a,
@@ -50,7 +79,6 @@ def output(request):
         'download_path': d_path
     }
     return  render(request,'dancc/output.html', context)
-
 
 
 
