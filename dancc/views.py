@@ -2,13 +2,10 @@ from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.http import HttpResponse, Http404
-from dancc.denoiser import denoise
+from dancc.denoiser import denoise , denoise_vide
 from pydub import AudioSegment
-from dancc.audio_extractor import extractor
-
+from dancc.audio_extractor import *
 import os
-
-is_video = False
 
 
 # Create your views here.
@@ -41,15 +38,13 @@ def wav_to_mp3(a):
     return down_path
 
 
-def output(request):
+def output_audio(request):
     is_mp3 = False
     fileObj = request.FILES['file_name']
     fs = FileSystemStorage()
-    print(fs , type(fs))
     a = fileObj.name
     b = a.split('.')
     extension = b[1]
-    print(extension)
     fileObj.name = 'test.' + extension
     #saving files of media folder 
     path_to_file = fs.save(fileObj.name , fileObj)
@@ -60,7 +55,6 @@ def output(request):
         mp3_to_wav()
     else:
         is_mp3 = False
-    
     
     #calling main.py of Unet model with media/test as input 
     d_path = '/media/' + denoise()
@@ -82,16 +76,37 @@ def output(request):
 
 
 
+def output_video(request):
+    fileObj = request.FILES['file_name']
+    fs = FileSystemStorage(location= settings.MEDIA_ROOT +'/video' , base_url= settings.MEDIA_ROOT +'/video')
+    a = fileObj.name
+    b = a.lower().split('.')
+    extension = b[1]
+    fileObj.name = 'test.' + extension
+    #saving files of media folder 
+    path_to_file = fs.save(fileObj.name , fileObj)
+    path = fs.url(path_to_file)
+    
+    extractor(fileObj.name)
+    noaudio(fileObj.name)
+    denoise_vide()
+    recombine2(a)
+
+    context ={
+        'file_name': a,
+        'file_path': path,
+         'download_path': '/media/video/denoise_' + a
+    }
+    return  render(request,'dancc/output.html', context)
+
 def denoise_video_file(request):
-    is_video = True
     fileObj = request.FILES['file_name']
     fs = FileSystemStorage()
     a = fileObj.name
-    b = a.split('.')
+    b = a.lower().split('.')
     extension = b[1]
-    print(extension)
     if extension == 'mp4':
-        return output(request)
+        return output_video(request)
 
     else:
         return render( request , 'dancc/index.html', {'alert_flag':True})
@@ -106,7 +121,7 @@ def denoise_audio_file(request):
     b = a.lower().split('.')
     extension = b[1]
     if extension == 'mp3' or extension == 'wav':
-        return output(request)
+        return output_audio(request)
 
     else:
         return render( request , 'dancc/index.html', {'alert_flag':True})
