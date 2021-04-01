@@ -1,6 +1,9 @@
 import librosa
 import numpy as np
 import os
+import warnings
+warnings.filterwarnings('ignore')
+
 
 
 def audio_to_audio_frame_stack(sound_data, frame_length, hop_length_frame):

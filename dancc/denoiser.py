@@ -2,7 +2,7 @@ from dancc.prediction_denoise import prediction
 from pydub import AudioSegment
 import os
 
-def denoise():
+def denoise(a,is_mp3):
     #Example: python main.py --mode="prediction"
     #path to find pre-trained weights / save models
     weights_path = 'E:/DANCC audio/front end/v2/website/weights'
@@ -15,7 +15,7 @@ def denoise():
     #Name noisy sound file to denoise
     audio_input_prediction = ['test.wav']
     #Name of denoised sound file to save
-    audio_output_prediction = 'denoise.wav'
+    audio_output_prediction = 'denoise_' + a +'.wav'
     # Sample rate to read audio
     sample_rate = 8000
     # Minimum duration of audio files to consider
@@ -32,6 +32,17 @@ def denoise():
     prediction(weights_path, name_model, audio_dir_prediction, dir_save_prediction, audio_input_prediction,
     audio_output_prediction, sample_rate, min_duration, frame_length, hop_length_frame, n_fft, hop_length_fft)
 
+    if is_mp3:
+        current = os.getcwd()
+        src = current + "\\media\\denoise_" + a +".wav"
+        dst =  current + "\\media\\denoise_" + a +".mp3"
+        sound = AudioSegment.from_mp3(src)
+        sound.export(dst, format="mp3")
+        os.remove(src)
+        print('Deleted' , src)
+
+    if is_mp3:
+           audio_output_prediction = 'denoise_' + a +'.mp3'
     return audio_output_prediction
 
 

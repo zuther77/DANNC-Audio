@@ -4,6 +4,11 @@ import soundfile as sf
 from tensorflow.keras.models import model_from_json
 from dancc.data_tools import scaled_in, inv_scaled_ou
 from dancc.data_tools import audio_files_to_numpy, numpy_audio_to_matrix_spectrogram, matrix_spectrogram_to_numpy_audio
+import warnings
+warnings.filterwarnings('ignore')
+
+physical_devices = tf.config.list_physical_devices('GPU')
+tf.config.experimental.set_memory_growth(physical_devices[0], enable=True)
 
 
 def prediction(weights_path, name_model, audio_dir_prediction, dir_save_prediction, audio_input_prediction,

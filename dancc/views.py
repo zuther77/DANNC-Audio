@@ -28,14 +28,13 @@ def mp3_to_wav():
 
 def wav_to_mp3(a):
     current = os.getcwd()
-    src = current + "\\media\\denoise.wav"
-    dst =  current + "\\media\\denoise_ " + a 
+    src = current + "\\media\\denoise_" + a +".wav"
+    dst =  current + "\\media\\denoise_ " + a +".mp3"
     sound = AudioSegment.from_mp3(src)
     sound.export(dst, format="mp3")
     os.remove(src)
     print('Deleted' , src)
-    down_path = '/media/denoise_' + a 
-    return down_path
+    return 'denoise_' + a + '.mp3'
 
 
 def output_audio(request):
@@ -57,15 +56,9 @@ def output_audio(request):
         is_mp3 = False
     
     #calling main.py of Unet model with media/test as input 
-    d_path = '/media/' + denoise()
+    d_path = '/media/' + denoise(b[0],is_mp3)
     clear_media_dir()
 
-    if is_mp3:
-        connverted_path = wav_to_mp3(a)
-        print("this is converted path : " , connverted_path)
-        d_path = connverted_path
-
-    print(d_path)
 
     context ={
         'file_name': a,
@@ -95,7 +88,7 @@ def output_video(request):
     context ={
         'file_name': a,
         'file_path': path,
-         'download_path': '/media/video/denoise_' + a
+        'download_path': '/media/' + 'video/denoised_' + a
     }
     return  render(request,'dancc/output.html', context)
 
