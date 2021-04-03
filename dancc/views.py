@@ -12,9 +12,12 @@ import os
 def home(request):
     return render(request,'dancc/index.html')
 
-def clear_media_dir():
+def clear_media_dir(is_mp3):
     current = os.getcwd()
-    current = current + '\\media\\test.wav'
+    if is_mp3:
+        current = current + '\\media\\test.mp3'
+    else:
+        current = current + '\\media\\test.wav'
     os.remove(current)
     print('Deleted' , current)
 
@@ -57,7 +60,7 @@ def output_audio(request):
     
     #calling main.py of Unet model with media/test as input 
     d_path = '/media/' + denoise(b[0],is_mp3)
-    clear_media_dir()
+    clear_media_dir(is_mp3)
 
 
     context ={

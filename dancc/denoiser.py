@@ -5,13 +5,13 @@ import os
 def denoise(a,is_mp3):
     #Example: python main.py --mode="prediction"
     #path to find pre-trained weights / save models
-    weights_path = 'E:/DANCC audio/front end/v2/website/weights'
+    weights_path = os.getcwd() + '/weights'
     #pre trained model
     name_model = 'model_unet'
     #directory where read noisy sound to denoise
-    audio_dir_prediction = 'E:/DANCC audio/front end/v2/website/media/'
+    audio_dir_prediction = os.getcwd() + '/media/'
     #directory to save the denoise sound
-    dir_save_prediction = 'E:/DANCC audio/front end/v2/website/media/'
+    dir_save_prediction = os.getcwd() +  '/media/'
     #Name noisy sound file to denoise
     audio_input_prediction = ['test.wav']
     #Name of denoised sound file to save
@@ -43,6 +43,7 @@ def denoise(a,is_mp3):
 
     if is_mp3:
            audio_output_prediction = 'denoise_' + a +'.mp3'
+    os.remove(os.getcwd() + '/media/' + audio_input_prediction[0])
     return audio_output_prediction
 
 
@@ -51,13 +52,13 @@ def denoise_vide():
     a = name.split('.')
      #Example: python main.py --mode="prediction"
     #path to find pre-trained weights / save models
-    weights_path = 'E:/DANCC audio/front end/v2/website/weights'
+    weights_path = os.getcwd() + '/weights'
     #pre trained model
     name_model = 'model_unet'
     #directory where read noisy sound to denoise
-    audio_dir_prediction = 'E:/DANCC audio/front end/v2/website/media/video'
+    audio_dir_prediction = os.getcwd() +  '/media/video'
     #directory to save the denoise sound
-    dir_save_prediction = 'E:/DANCC audio/front end/v2/website/media/video/'
+    dir_save_prediction =  os.getcwd() + '/media/video/'
     #Name noisy sound file to denoise
     audio_input_prediction = ['extracted_test.mp3']
     #Name of denoised sound file to save
