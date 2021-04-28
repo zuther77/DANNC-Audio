@@ -1,5 +1,6 @@
-# Dancc-Audio
-
+# DANCC-Audio
+  ## Deep Artificial Neural Network based Clean Audio
+  
 ### Remove Background Noise from Audio and Video Files 
 
 ### Requirements 
@@ -26,7 +27,7 @@
   * Open Terninal and cd into desired directory
   * Run these Commands
     * ``` git clone https://github.com/zuther77/Dancc-Audio.git ```
-    * ``` cd Dancc-Audio ```
+    * ``` cd DANCC-Audio ```
     * ``` python pip install -r requirements.txt ```
   * Once all the dependencies get installed successfully run local server by 
     * ``` python manage.py runserver ```
