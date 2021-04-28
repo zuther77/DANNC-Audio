@@ -17,7 +17,7 @@ def clear_media_dir(is_mp3):
     if is_mp3:
         current = current + '\\media\\test.mp3'
     else:
-        current = current + '\\media\\test.wav'
+        return 
     os.remove(current)
     print('Deleted' , current)
 
@@ -28,16 +28,6 @@ def mp3_to_wav():
     dst =  current + "\\media\\test.wav"
     sound = AudioSegment.from_mp3(src)
     sound.export(dst, format="wav")
-
-def wav_to_mp3(a):
-    current = os.getcwd()
-    src = current + "\\media\\denoise_" + a +".wav"
-    dst =  current + "\\media\\denoise_ " + a +".mp3"
-    sound = AudioSegment.from_mp3(src)
-    sound.export(dst, format="mp3")
-    os.remove(src)
-    print('Deleted' , src)
-    return 'denoise_' + a + '.mp3'
 
 
 def output_audio(request):
