@@ -1,4 +1,4 @@
-# DANCC-Audio
+# DANNC-Audio
   ## Deep Artificial Neural Network based Clean Audio
   
 ### Remove Background Noise from Audio and Video Files 
