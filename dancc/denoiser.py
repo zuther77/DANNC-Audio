@@ -43,7 +43,7 @@ def denoise(a,is_mp3):
 
     if is_mp3:
            audio_output_prediction = 'denoise_' + a +'.mp3'
-    os.remove(os.getcwd() + '/media/' + audio_input_prediction[0])
+#     os.remove(os.getcwd() + '/media/' + audio_input_prediction[0])
     return audio_output_prediction
 
 
