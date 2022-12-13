@@ -7,8 +7,8 @@ from dancc.data_tools import audio_files_to_numpy, numpy_audio_to_matrix_spectro
 import warnings
 warnings.filterwarnings('ignore')
 
-physical_devices = tf.config.list_physical_devices('GPU')
-tf.config.experimental.set_memory_growth(physical_devices[0], enable=True)
+physical_devices = tf.config.list_physical_devices('CPU')
+# tf.config.experimental.set_memory_growth(physical_devices[0], enable=True)
 
 
 def prediction(weights_path, name_model, audio_dir_prediction, dir_save_prediction, audio_input_prediction,
