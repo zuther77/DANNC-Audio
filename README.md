@@ -1,5 +1,6 @@
 # DANNC-Audio
   ## Deep Artificial Neural Network based Clean Audio
+  #### PS. This is an old project and was later moved to AWS. I forgot to push the last commit so code here is old and can only be run locally. 
   
 ### Remove Background Noise from Audio and Video Files 
 
